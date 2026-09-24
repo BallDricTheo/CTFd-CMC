@@ -1,0 +1,363 @@
+{% extends "base.html" %}
+
+{% block stylesheets %}
+{{ super() }}
+<link rel="stylesheet" href="/plugins/ctf_tracks/assets/tracks.css">
+{% endblock %}
+
+{% block content %}
+
+<div
+  class="container py-5 ctf-tracks"
+  x-data="TrackChallengeBoard"
+>
+
+  <!-- =====================================================
+       TRACK HEADER
+       ===================================================== -->
+
+  <div class="track-page-header">
+
+    <div class="tracks-eyebrow">
+      <span class="eyebrow-line"></span>
+      {{ track.kind|upper }} TRACK
+    </div>
+
+    <h1>{{ track.name }}</h1>
+
+    <p>
+      {{ track.description or 'Structured cybersecurity learning path.' }}
+    </p>
+
+    <div class="track-page-stats">
+
+      <div>
+        <strong>{{ total }}</strong>
+        <span>LABS</span>
+      </div>
+
+      <div>
+        <strong>{{ completed }}/{{ total }}</strong>
+        <span>COMPLETED</span>
+      </div>
+
+      <div>
+        <strong>{{ progress }}%</strong>
+        <span>PROGRESS</span>
+      </div>
+
+      <div>
+        <strong>{{ track.difficulty }}</strong>
+        <span>DIFFICULTY</span>
+      </div>
+
+    </div>
+
+    {% if total > 0 %}
+    <div class="track-progress large">
+
+      <div class="progress-label">
+        <span>{{ completed }}/{{ total }} LABS COMPLETED</span>
+        <span>{{ progress }}%</span>
+      </div>
+
+      <div class="track-progress-bar">
+        <div style="width: {{ progress }}%"></div>
+      </div>
+
+    </div>
+    {% endif %}
+
+  </div>
+
+
+  <!-- =====================================================
+       CHALLENGE LIST
+       ===================================================== -->
+
+  <div class="track-challenges">
+
+    {% for item in levels %}
+
+      {% set level = item.level %}
+
+      {% if item.has_labs %}
+
+      <section class="track-category">
+
+        <div class="category-header">
+
+          <h2>
+            {{ level.name }}
+          </h2>
+
+          {% if level.description %}
+          <p>
+            {{ level.description }}
+          </p>
+          {% endif %}
+
+        </div>
+
+
+        <div class="category-challenges">
+
+          <div class="challenges-row row">
+
+            {% for lab in item.labs %}
+
+            <div class="col-sm-6 col-md-4 col-lg-3 my-3">
+
+              <a
+                href="/challenges#{{ lab.challenge.name | urlencode }}-{{ lab.challenge_id }}"
+                class="challenge-button btn btn-dark w-100 h-100 {% if lab.solved %}challenge-solved{% endif %}"
+                style="text-decoration: none;"
+              >
+
+                <div class="challenge-inner my-3">
+
+                  <p>
+                    {{ lab.title_override or lab.challenge.name }}
+                  </p>
+
+                  <span>
+                    {{ lab.challenge.value }}
+                  </span>
+
+                </div>
+
+              </a>
+
+            </div>
+
+            {% endfor %}
+
+          </div>
+
+        </div>
+
+      </section>
+
+      {% endif %}
+
+    {% endfor %}
+
+
+    <!-- ===================================================
+         EMPTY TRACK
+         =================================================== -->
+
+    {% if total == 0 %}
+
+    <div class="track-empty">
+
+      <div>◌</div>
+
+      <h3>No labs available</h3>
+
+      <p>
+        Labs are being prepared for this track.
+      </p>
+
+    </div>
+
+    {% endif %}
+
+  </div>
+
+
+  <!-- =====================================================
+       CTFd CHALLENGE MODAL
+       ===================================================== -->
+
+  <div
+    x-ref="challengeWindow"
+    id="challenge-window"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    x-data=""
+    x-html="$store.challenge.data.view"
+  ></div>
+
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+{{ Assets.js("assets/js/challenges.js") }}
+
+<script>
+document.addEventListener("alpine:init", () => {
+
+    Alpine.data("TrackChallengeBoard", () => ({
+
+        async init() {
+
+            console.log(
+                "TrackChallengeBoard initialized"
+            );
+
+        },
+
+
+        async loadChallenge(challengeId) {
+
+            console.log(
+                "Loading challenge:",
+                challengeId
+            );
+
+            try {
+
+                await CTFd.pages.challenge.displayChallenge(
+                    challengeId,
+                    (response) => {
+
+                        if (
+                            !response ||
+                            !response.data
+                        ) {
+
+                            console.error(
+                                "Invalid challenge response",
+                                response
+                            );
+
+                            return;
+                        }
+
+
+                        /*
+                         * CTFd challenge modal uses the
+                         * global Alpine challenge store.
+                         */
+
+                        if (
+                            typeof Alpine !== "undefined" &&
+                            Alpine.store("challenge")
+                        ) {
+
+                            Alpine.store(
+                                "challenge"
+                            ).data = response.data;
+
+                        }
+
+
+                        /*
+                         * Bootstrap modal
+                         */
+
+                        const modalElement =
+                            document.querySelector(
+                                "#challenge-window"
+                            );
+
+                        if (!modalElement) {
+
+                            console.error(
+                                "Challenge modal element not found"
+                            );
+
+                            return;
+                        }
+
+
+                        /*
+                         * Parse external links exactly
+                         * like the native CTFd challenge UI.
+                         */
+
+                        if (response.data.view) {
+
+                            const parser =
+                                new DOMParser();
+
+                            const documentView =
+                                parser.parseFromString(
+                                    response.data.view,
+                                    "text/html"
+                                );
+
+                            documentView
+                                .querySelectorAll(
+                                    'a[href*="://"]'
+                                )
+                                .forEach((link) => {
+
+                                    link.setAttribute(
+                                        "target",
+                                        "_blank"
+                                    );
+
+                                });
+
+                            response.data.view =
+                                documentView
+                                    .documentElement
+                                    .outerHTML;
+
+                        }
+
+
+                        if (
+                            Alpine.store("challenge")
+                        ) {
+
+                            Alpine.store(
+                                "challenge"
+                            ).data = response.data;
+
+                        }
+
+
+                        /*
+                         * Wait for Alpine DOM update.
+                         */
+
+                        Alpine.nextTick(() => {
+
+                            try {
+
+                                const modal =
+                                    bootstrap.Modal
+                                    .getOrCreateInstance(
+                                        modalElement
+                                    );
+
+                                modal.show();
+
+                            } catch (error) {
+
+                                console.error(
+                                    "Failed to open challenge modal:",
+                                    error
+                                );
+
+                            }
+
+                        });
+
+                    }
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "Failed to load challenge:",
+                    error
+                );
+
+            }
+
+        }
+
+    }));
+
+});
+</script>
+
+{% endblock %}

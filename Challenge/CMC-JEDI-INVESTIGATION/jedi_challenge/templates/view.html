@@ -1,0 +1,260 @@
+{% extends "challenge.html" %}
+
+{% block input %}
+
+<input
+    id="challenge-id"
+    class="challenge-id"
+    type="hidden"
+    value="{{ challenge.id }}"
+>
+
+<div id="jedi-stage-container">
+
+    <!-- Q1 -->
+    <div class="jedi-stage" data-stage="1">
+
+        <div class="jedi-stage-header">
+            <span class="jedi-stage-number">Q1</span>
+            <span class="jedi-stage-title">
+                SECRET MAP
+            </span>
+            <span class="jedi-stage-status" id="jedi-status-1">
+                LOCKED
+            </span>
+        </div>
+
+        <p>
+            Phân tích metadata của <code>map.jpg</code>.
+            Tìm thông tin bí mật được Jedi giấu trong EXIF metadata.
+        </p>
+
+        <div class="jedi-submit-row">
+
+            <input
+                id="jedi-input-1"
+                class="form-control jedi-input"
+                type="text"
+                placeholder="Flag Q1"
+                autocomplete="off"
+            >
+
+            <button
+                id="jedi-submit-1"
+                type="button"
+                class="btn btn-outline-secondary jedi-submit"
+                data-stage="1"
+            >
+                SUBMIT Q1
+            </button>
+
+        </div>
+
+        <div id="jedi-message-1" class="jedi-message"></div>
+
+    </div>
+
+
+    <!-- Q2 -->
+    <div class="jedi-stage jedi-locked" data-stage="2">
+
+        <div class="jedi-stage-header">
+
+            <span class="jedi-stage-number">Q2</span>
+
+            <span class="jedi-stage-title">
+                MATRYOSHKA MAP
+            </span>
+
+            <span class="jedi-stage-status" id="jedi-status-2">
+                LOCKED
+            </span>
+
+        </div>
+
+        <p>
+            Tiếp tục điều tra <code>map.jpg</code>.
+            Carve dữ liệu/hình ảnh được giấu bên trong file.
+        </p>
+
+        <div class="jedi-submit-row">
+
+            <input
+                id="jedi-input-2"
+                class="form-control jedi-input"
+                type="text"
+                placeholder="Hoàn thành Q1 trước"
+                autocomplete="off"
+                disabled
+            >
+
+            <button
+                id="jedi-submit-2"
+                type="button"
+                class="btn btn-outline-secondary jedi-submit"
+                data-stage="2"
+                disabled
+            >
+                SUBMIT Q2
+            </button>
+
+        </div>
+
+        <div id="jedi-message-2" class="jedi-message"></div>
+
+    </div>
+
+
+    <!-- Q3 -->
+    <div class="jedi-stage jedi-locked" data-stage="3">
+
+        <div class="jedi-stage-header">
+
+            <span class="jedi-stage-number">Q3</span>
+
+            <span class="jedi-stage-title">
+                JEDI USE WINDOWS NOTEPAD?
+            </span>
+
+            <span class="jedi-stage-status" id="jedi-status-3">
+                LOCKED
+            </span>
+
+        </div>
+
+        <p>
+            Phân tích <code>LocalState.zip</code>.
+            Điều tra Windows Notepad TabState/WindowState
+            và khôi phục danh sách droid bí mật.
+        </p>
+
+        <div class="jedi-submit-row">
+
+            <input
+                id="jedi-input-3"
+                class="form-control jedi-input"
+                type="text"
+                placeholder="Hoàn thành Q2 trước"
+                autocomplete="off"
+                disabled
+            >
+
+            <button
+                id="jedi-submit-3"
+                type="button"
+                class="btn btn-outline-secondary jedi-submit"
+                data-stage="3"
+                disabled
+            >
+                SUBMIT Q3
+            </button>
+
+        </div>
+
+        <div id="jedi-message-3" class="jedi-message"></div>
+
+    </div>
+
+</div>
+
+
+<style>
+
+#jedi-stage-container {
+    margin-top: 25px;
+}
+
+.jedi-stage {
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 18px;
+    background: rgba(0, 0, 0, 0.12);
+}
+
+.jedi-stage-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.jedi-stage-number {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.jedi-stage-title {
+    font-weight: 600;
+    flex: 1;
+}
+
+.jedi-stage-status {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 9px;
+    border-radius: 4px;
+    background: #555;
+}
+
+.jedi-submit-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.jedi-input {
+    flex: 1;
+}
+
+.jedi-submit {
+    min-width: 140px;
+}
+
+.jedi-locked {
+    opacity: 0.55;
+}
+
+.jedi-completed {
+    border-color: #198754;
+}
+
+.jedi-completed .jedi-stage-status {
+    background: #198754;
+}
+
+.jedi-active {
+    border-color: #0dcaf0;
+}
+
+.jedi-active .jedi-stage-status {
+    background: #0dcaf0;
+    color: #000;
+}
+
+.jedi-message {
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+.jedi-success {
+    color: #198754;
+}
+
+.jedi-error {
+    color: #dc3545;
+}
+
+</style>
+
+{% endblock %}
+
+
+{% block submit %}
+
+<!--
+    Submit button được thay thế hoàn toàn bằng
+    3 submit button riêng trong block input.
+-->
+
+{% endblock %}

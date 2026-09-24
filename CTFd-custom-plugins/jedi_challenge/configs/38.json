@@ -1,0 +1,85 @@
+{
+  "category": "Malware Analysis",
+  "tactics": [
+    "Credential Access",
+    "Collection",
+    "Command and Control",
+    "Exfiltration"
+  ],
+  "tools": [
+    "ExtAnalysis",
+    "CRX Viewer"
+  ],
+  "stages": [
+    {
+      "stage": 1,
+      "title": "ENCODING",
+      "question": "Which encoding method does the browser extension use to obscure target URLs, making them more difficult to detect during analysis?",
+      "answers": ["Base64"],
+      "case_sensitive": false
+    },
+    {
+      "stage": 2,
+      "title": "TARGET WEBSITE",
+      "question": "Which website does the extension monitor for data theft, targeting user accounts to steal sensitive information?",
+      "answers": ["www.facebook.com"],
+      "case_sensitive": false
+    },
+    {
+      "stage": 3,
+      "title": "DATA EXFILTRATION",
+      "question": "Which type of HTML element is utilized by the extension to send stolen data?",
+      "answers": ["<img>"],
+      "case_sensitive": true
+    },
+    {
+      "stage": 4,
+      "title": "ANTI-ANALYSIS",
+      "question": "What is the first specific condition in the code that triggers the extension to deactivate itself?",
+      "answers": ["navigator.plugins.length === 0"],
+      "case_sensitive": true
+    },
+    {
+      "stage": 5,
+      "title": "FORM CAPTURE",
+      "question": "Which event does the extension capture to track user input submitted through forms?",
+      "answers": ["submit"],
+      "case_sensitive": false
+    },
+    {
+      "stage": 6,
+      "title": "KEYSTROKE CAPTURE",
+      "question": "Which API or method does the extension use to capture and monitor user keystrokes?",
+      "answers": ["keydown"],
+      "case_sensitive": false
+    },
+    {
+      "stage": 7,
+      "title": "C2 DOMAIN",
+      "question": "What is the domain where the extension transmits the exfiltrated data?",
+      "answers": ["Mo.Elshaheedy.com"],
+      "case_sensitive": false
+    },
+    {
+      "stage": 8,
+      "title": "CREDENTIAL EXFILTRATION",
+      "question": "Which function in the code is used to exfiltrate user credentials, including the username and password?",
+      "answers": ["exfiltrateCredentials(username, password);"],
+      "case_sensitive": true
+    },
+    {
+      "stage": 9,
+      "title": "ENCRYPTION",
+      "question": "Which encryption algorithm is applied to secure the data before sending?",
+      "answers": ["AES"],
+      "case_sensitive": false
+    },
+    {
+      "stage": 10,
+      "title": "COOKIE ACCESS",
+      "question": "What critical browser API does the extension use to access and manipulate cookies?",
+      "answers": ["chrome.cookies"],
+      "case_sensitive": true
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Weaver's Labyrinth</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #e74c3c;
+        }
+        #puzzle {
+            margin: 20px;
+            padding: 20px;
+            background-color: #34495e;
+            border-radius: 10px;
+        }
+        input {
+            margin: 10px;
+            padding: 8px;
+            font-size: 16px;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        .flag {
+            display: none;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #27ae60;
+            border: 1px solid #2ecc71;
+            color: #ecf0f1;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Web Weaver's Labyrinth</h1>
+    <p>Welcome to my web of code. To find the flag, you must navigate through the threads.</p>
+    <p>Enter the correct sequence to unlock the secret.</p>
+
+    <div id="puzzle">
+        <p>What is the only word that is spelled incorrectly in the dictionary?</p>
+        <input type="text" id="answer" placeholder="Your answer">
+        <button onclick="checkAnswer()">Submit</button>
+        <div id="message"></div>
+        <div id="flag" class="flag"></div>
+    </div>
+
+    <script>
+        // Request notification permission on load
+        if ('Notification' in window) {
+            Notification.requestPermission();
+        }
+
+        var _0x5f = 'ZmxhZ3s=';
+        var _0x60 = 'dzNiXw==';
+        var _0x61 = 'dzM0djNyXw==';
+        var _0x62 = 'bTRzdDNy';
+        var _0x63 = 'fQ==';
+        var _0x64 = 'dGVzdA==';
+        var _0x65 = 'ZmFrZQ==';
+        var _0x66 = 'aW5jb3JyZWN0bHk=';
+
+        function checkAnswer() {
+            var answer = document.getElementById('answer').value.toLowerCase();
+            var correctAnswer = atob(_0x66);
+            if (answer === correctAnswer) {
+                // Deobfuscate base64 and construct flag
+                var flag = atob(_0x5f) + atob(_0x60) + atob(_0x61) + atob(_0x62) + atob(_0x63);
+                // Show notification with flag
+                if ('Notification' in window && Notification.permission === 'granted') {
+                    new Notification('Congratulations! You found the flag:', { body: flag });
+                }
+                document.getElementById('message').innerText = 'Correct!';
+                document.getElementById('flag').style.display = 'none';
+            } else {
+                document.getElementById('message').innerText = 'Wrong answer. Try again.';
+                document.getElementById('flag').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

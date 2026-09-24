@@ -1,0 +1,1383 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+
+<style>
+.track-admin {
+    max-width: 1550px;
+}
+
+.track-admin-header {
+    margin-bottom: 28px;
+}
+
+.track-admin-header h1 {
+    font-weight: 800;
+    letter-spacing: -.035em;
+    margin-bottom: 5px;
+}
+
+.track-admin-header p {
+    color: #6c757d;
+}
+
+.track-create,
+.track-card-admin {
+    border: 1px solid #dee2e6;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.track-create {
+    box-shadow: 0 2px 10px rgba(0,0,0,.03);
+}
+
+.track-create-header {
+    padding: 17px 22px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.track-create-body {
+    padding: 22px;
+}
+
+.track-card-admin {
+    box-shadow: 0 4px 18px rgba(0,0,0,.045);
+}
+
+.track-card-header {
+    padding: 20px 22px;
+    border-bottom: 1px solid #dee2e6;
+    background: linear-gradient(135deg, #f8f9fa, #ffffff);
+}
+
+.track-icon-admin {
+    width: 54px;
+    height: 54px;
+    min-width: 54px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 27px;
+    background: #eef1f4;
+    border: 1px solid #dee2e6;
+}
+
+.track-title {
+    font-size: 1.18rem;
+    font-weight: 800;
+    margin: 0;
+}
+
+.track-slug {
+    color: #6c757d;
+    font-family: monospace;
+    font-size: .76rem;
+    margin-top: 2px;
+}
+
+.track-stats {
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+    margin-top: 9px;
+}
+
+.track-stat {
+    padding: 4px 8px;
+    border-radius: 6px;
+    background: #f1f3f5;
+    color: #6c757d;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .06em;
+}
+
+.track-body {
+    padding: 22px;
+}
+
+.section-label {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .11em;
+    text-transform: uppercase;
+    color: #6c757d;
+    margin-bottom: 10px;
+}
+
+.admin-actions {
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.admin-actions form {
+    margin: 0;
+}
+
+.level-admin {
+    border: 1px solid #dee2e6;
+    border-radius: 13px;
+    margin-bottom: 14px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.level-admin-header {
+    padding: 15px 17px;
+    background: #fafafa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.level-number-admin {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    border-radius: 10px;
+    background: #212529;
+    color: white;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.level-title-admin {
+    font-weight: 800;
+    font-size: .95rem;
+}
+
+.level-description {
+    font-size: .78rem;
+    color: #6c757d;
+}
+
+.lab-admin {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px;
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    transition: border-color .15s, box-shadow .15s;
+}
+
+.lab-admin:hover {
+    border-color: #ced4da;
+    box-shadow: 0 2px 8px rgba(0,0,0,.035);
+}
+
+.lab-number {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background: #f1f3f5;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.lab-name {
+    font-weight: 700;
+    font-size: .88rem;
+}
+
+.lab-meta {
+    font-size: .71rem;
+    color: #6c757d;
+    margin-top: 3px;
+}
+
+.required-badge {
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: .06em;
+    vertical-align: middle;
+}
+
+.empty-level {
+    padding: 18px;
+    text-align: center;
+    border: 1px dashed #ced4da;
+    border-radius: 10px;
+    color: #6c757d;
+    font-size: .8rem;
+    background: #fafafa;
+}
+
+.add-lab-panel {
+    margin-top: 14px;
+    padding: 15px;
+    border: 1px solid #e1e5e9;
+    border-radius: 11px;
+    background: #f8f9fa;
+}
+
+.add-lab-title {
+    font-size: .78rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+.challenge-picker {
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.challenge-picker .form-control,
+.challenge-picker .form-select {
+    font-size: .82rem;
+}
+
+.challenge-select {
+    min-height: 42px;
+}
+
+.challenge-help {
+    font-size: .68rem;
+    color: #6c757d;
+    margin-top: 5px;
+}
+
+.challenge-count {
+    font-size: .68rem;
+    color: #6c757d;
+    white-space: nowrap;
+}
+
+.no-challenge-result {
+    display: none;
+    padding: 8px 10px;
+    color: #6c757d;
+    font-size: .72rem;
+}
+
+.edit-panel {
+    background: #fafafa;
+    border: 1px solid #e1e5e9;
+    border-radius: 10px;
+    padding: 14px;
+}
+
+.track-description {
+    color: #6c757d;
+    font-size: .83rem;
+    max-width: 850px;
+    margin-top: 8px;
+}
+
+@media (max-width: 767px) {
+    .track-body {
+        padding: 15px;
+    }
+
+    .track-card-header {
+        padding: 16px;
+    }
+
+    .lab-admin {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .lab-admin .admin-actions {
+        width: 100%;
+        margin-left: 46px;
+    }
+}
+</style>
+
+
+<div class="container-fluid py-4 track-admin">
+
+    <!-- HEADER -->
+    <div class="track-admin-header">
+        <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+
+            <div>
+                <h1>Skill Tracks</h1>
+                <p class="mb-0">
+                    Manage Track → Level → Challenge learning paths.
+                </p>
+            </div>
+
+            <a href="/tracks"
+               target="_blank"
+               class="btn btn-outline-primary">
+                View Public Tracks ↗
+            </a>
+
+        </div>
+    </div>
+
+
+    <!-- CREATE TRACK -->
+    <div class="track-create mb-4">
+
+        <div class="track-create-header">
+            <strong>＋ Create New Track</strong>
+        </div>
+
+        <div class="track-create-body">
+
+            <form method="POST"
+                  action="{{ url_for('tracks_create') }}">
+
+                <input type="hidden"
+                       name="nonce"
+                       value="{{ nonce }}">
+
+                <div class="row g-3">
+
+                    <div class="col-lg-3">
+                        <label class="form-label">Track Name</label>
+                        <input class="form-control"
+                               name="name"
+                               placeholder="Memory Forensics"
+                               required>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <label class="form-label">Slug</label>
+                        <input class="form-control"
+                               name="slug"
+                               placeholder="memory-forensics"
+                               required>
+                    </div>
+
+                    <div class="col-lg-2">
+                        <label class="form-label">Difficulty</label>
+                        <select class="form-select" name="difficulty">
+                            <option value="Easy">Easy</option>
+                            <option value="Medium" selected>Medium</option>
+                            <option value="Hard">Hard</option>
+                            <option value="Expert">Expert</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-1">
+                        <label class="form-label">Icon</label>
+                        <input class="form-control"
+                               name="icon"
+                               value="🎯">
+                    </div>
+
+                    <div class="col-lg-1">
+                        <label class="form-label">Order</label>
+                        <input class="form-control"
+                               name="sort_order"
+                               type="number"
+                               value="0">
+                    </div>
+
+                    <div class="col-lg-2">
+                        <label class="form-label">Type</label>
+                        <select class="form-select" name="kind">
+                            <option value="skill">Skill</option>
+                            <option value="role">Job Role</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control"
+                                  name="description"
+                                  rows="2"
+                                  placeholder="Describe the skills covered by this track..."></textarea>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-check">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   name="published"
+                                   value="1"
+                                   id="create-published"
+                                   checked>
+                            <label class="form-check-label"
+                                   for="create-published">
+                                Publish Track immediately
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <button class="btn btn-primary">
+                            Create Track
+                        </button>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+
+    <!-- TRACK LIST -->
+    {% for track in tracks %}
+
+    <div class="track-card-admin mb-4">
+
+        <!-- TRACK HEADER -->
+        <div class="track-card-header">
+
+            <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+
+                <div class="d-flex align-items-center gap-3">
+
+                    <div class="track-icon-admin">
+                        {{ track.icon }}
+                    </div>
+
+                    <div>
+
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
+
+                            <h2 class="track-title">
+                                {{ track.name }}
+                            </h2>
+
+                            {% if track.published %}
+                                <span class="badge text-bg-success">
+                                    PUBLISHED
+                                </span>
+                            {% else %}
+                                <span class="badge text-bg-secondary">
+                                    DRAFT
+                                </span>
+                            {% endif %}
+
+                        </div>
+
+                        <div class="track-slug">
+                            /tracks/{{ track.slug }}
+                        </div>
+
+                        {% if track.description %}
+                        <div class="track-description">
+                            {{ track.description }}
+                        </div>
+                        {% endif %}
+
+                        <div class="track-stats">
+
+                            <span class="track-stat">
+                                {{ track.difficulty|upper }}
+                            </span>
+
+                            <span class="track-stat">
+                                {{ track._level_count }} LEVELS
+                            </span>
+
+                            <span class="track-stat">
+                                {{ track._lab_count }} LABS
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TRACK ACTIONS -->
+                <div class="admin-actions">
+
+                    <a href="{{ url_for('track_detail', slug=track.slug) }}"
+                       target="_blank"
+                       class="btn btn-sm btn-outline-primary">
+                        View
+                    </a>
+
+                    <form method="POST"
+                          action="{{ url_for('tracks_toggle', track_id=track.id) }}">
+
+                        <input type="hidden"
+                               name="nonce"
+                               value="{{ nonce }}">
+
+                        <button class="btn btn-sm btn-outline-secondary">
+                            {% if track.published %}
+                                Unpublish
+                            {% else %}
+                                Publish
+                            {% endif %}
+                        </button>
+
+                    </form>
+
+                    <button type="button"
+                            class="btn btn-sm btn-outline-danger"
+                            onclick="document.getElementById('delete-track-{{ track.id }}').submit();">
+                        Delete
+                    </button>
+
+                    <form id="delete-track-{{ track.id }}"
+                          method="POST"
+                          action="{{ url_for('tracks_delete', track_id=track.id) }}"
+                          onsubmit="return confirm('Delete this Track and all Levels/Lab mappings?');">
+
+                        <input type="hidden"
+                               name="nonce"
+                               value="{{ nonce }}">
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="track-body">
+
+            <!-- EDIT TRACK -->
+            <details class="mb-4">
+
+                <summary class="section-label"
+                         style="cursor:pointer;">
+                    Edit Track
+                </summary>
+
+                <form method="POST"
+                      action="{{ url_for('tracks_edit', track_id=track.id) }}"
+                      class="mt-3">
+
+                    <input type="hidden"
+                           name="nonce"
+                           value="{{ nonce }}">
+
+                    <div class="row g-2">
+
+                        <div class="col-lg-3">
+                            <input class="form-control"
+                                   name="name"
+                                   value="{{ track.name }}"
+                                   required>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <input class="form-control"
+                                   name="slug"
+                                   value="{{ track.slug }}"
+                                   required>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <select class="form-select"
+                                    name="difficulty">
+
+                                {% for difficulty in ['Easy','Medium','Hard','Expert'] %}
+                                <option value="{{ difficulty }}"
+                                    {% if track.difficulty == difficulty %}selected{% endif %}>
+                                    {{ difficulty }}
+                                </option>
+                                {% endfor %}
+
+                            </select>
+                        </div>
+
+                        <div class="col-lg-1">
+                            <input class="form-control"
+                                   name="icon"
+                                   value="{{ track.icon }}">
+                        </div>
+
+                        <div class="col-lg-1">
+                            <input class="form-control"
+                                   name="sort_order"
+                                   type="number"
+                                   value="{{ track.sort_order }}">
+                        </div>
+
+                        <div class="col-lg-2">
+                            <select class="form-select"
+                                    name="kind">
+
+                                <option value="skill"
+                                    {% if track.kind == 'skill' %}selected{% endif %}>
+                                    Skill
+                                </option>
+
+                                <option value="role"
+                                    {% if track.kind == 'role' %}selected{% endif %}>
+                                    Job Role
+                                </option>
+
+                            </select>
+                        </div>
+
+                        <div class="col-12">
+                            <textarea class="form-control"
+                                      name="description"
+                                      rows="2">{{ track.description or '' }}</textarea>
+                        </div>
+
+                        <div class="col-12">
+
+                            <div class="form-check">
+
+                                <input class="form-check-input"
+                                       type="checkbox"
+                                       name="published"
+                                       value="1"
+                                       id="published-{{ track.id }}"
+                                       {% if track.published %}checked{% endif %}>
+
+                                <label class="form-check-label"
+                                       for="published-{{ track.id }}">
+                                    Published
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-12">
+
+                            <button class="btn btn-sm btn-primary">
+                                Save Changes
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </details>
+
+
+            <div class="row g-4">
+
+                <!-- ADD LEVEL -->
+                <div class="col-xl-4">
+
+                    <div class="section-label">
+                        Add Level
+                    </div>
+
+                    <form method="POST"
+                          action="{{ url_for('tracks_level_create', track_id=track.id) }}">
+
+                        <input type="hidden"
+                               name="nonce"
+                               value="{{ nonce }}">
+
+                        <div class="mb-2">
+
+                            <input class="form-control"
+                                   name="level_number"
+                                   type="number"
+                                   min="1"
+                                   value="{{ track.levels|length + 1 }}"
+                                   required>
+
+                        </div>
+
+                        <div class="mb-2">
+
+                            <input class="form-control"
+                                   name="name"
+                                   placeholder="Memory Investigation"
+                                   required>
+
+                        </div>
+
+                        <div class="mb-2">
+
+                            <textarea class="form-control"
+                                      name="description"
+                                      rows="3"
+                                      placeholder="Level description"></textarea>
+
+                        </div>
+
+                        <button class="btn btn-outline-primary w-100">
+                            + Add Level
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+                <!-- LEVELS -->
+                <div class="col-xl-8">
+
+                    <div class="section-label">
+                        Learning Path
+                    </div>
+
+                    {% for level in track.levels %}
+
+                    <div class="level-admin">
+
+                        <!-- LEVEL HEADER -->
+                        <div class="level-admin-header">
+
+                            <div class="d-flex justify-content-between align-items-center gap-2">
+
+                                <div class="d-flex align-items-center gap-3">
+
+                                    <div class="level-number-admin">
+                                        {{ "%02d"|format(level.level_number) }}
+                                    </div>
+
+                                    <div>
+
+                                        <div class="level-title-admin">
+                                            {{ level.name }}
+                                        </div>
+
+                                        {% if level.description %}
+                                        <div class="level-description">
+                                            {{ level.description }}
+                                        </div>
+                                        {% endif %}
+
+                                        <div class="level-description mt-1">
+                                            {{ level.labs|length }} Lab(s)
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="admin-actions">
+
+                                    <button type="button"
+                                            class="btn btn-sm btn-outline-secondary"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#edit-level-{{ level.id }}">
+                                        Edit
+                                    </button>
+
+                                    <form method="POST"
+                                          action="{{ url_for('tracks_level_delete', track_id=track.id, level_id=level.id) }}"
+                                          onsubmit="return confirm('Delete this Level and all Lab mappings?');">
+
+                                        <input type="hidden"
+                                               name="nonce"
+                                               value="{{ nonce }}">
+
+                                        <button class="btn btn-sm btn-outline-danger">
+                                            Delete
+                                        </button>
+
+                                    </form>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- EDIT LEVEL -->
+                            <div class="collapse mt-3"
+                                 id="edit-level-{{ level.id }}">
+
+                                <div class="edit-panel">
+
+                                    <form method="POST"
+                                          action="{{ url_for('tracks_level_edit', track_id=track.id, level_id=level.id) }}">
+
+                                        <input type="hidden"
+                                               name="nonce"
+                                               value="{{ nonce }}">
+
+                                        <div class="row g-2">
+
+                                            <div class="col-md-2">
+                                                <input class="form-control"
+                                                       name="level_number"
+                                                       type="number"
+                                                       min="1"
+                                                       value="{{ level.level_number }}"
+                                                       required>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <input class="form-control"
+                                                       name="name"
+                                                       value="{{ level.name }}"
+                                                       required>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <input class="form-control"
+                                                       name="description"
+                                                       value="{{ level.description or '' }}">
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <button class="btn btn-primary w-100">
+                                                    Save
+                                                </button>
+                                            </div>
+
+                                        </div>
+
+                                    </form>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- LABS -->
+                        <div class="p-3">
+
+                            {% for lab in level.labs %}
+
+                            <div class="lab-admin">
+
+                                <div class="lab-number">
+                                    {{ "%02d"|format(loop.index) }}
+                                </div>
+
+                                <div class="flex-grow-1">
+
+                                    <div class="lab-name">
+
+                                        #{{ lab.challenge_id }}
+                                        —
+                                        {{ lab.title_override or lab.challenge.name }}
+
+                                        {% if lab.required %}
+                                            <span class="badge text-bg-primary required-badge">
+                                                REQUIRED
+                                            </span>
+                                        {% else %}
+                                            <span class="badge text-bg-secondary required-badge">
+                                                OPTIONAL
+                                            </span>
+                                        {% endif %}
+
+                                    </div>
+
+                                    <div class="lab-meta">
+
+                                        {{ lab.challenge.category or 'Uncategorized' }}
+
+                                        ·
+
+                                        {{ lab.challenge.value }} points
+
+                                        · Order {{ lab.sort_order }}
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="admin-actions">
+
+                                    <button type="button"
+                                            class="btn btn-sm btn-outline-secondary"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#edit-lab-{{ lab.id }}">
+                                        Edit
+                                    </button>
+
+                                    <form method="POST"
+                                          action="{{ url_for('tracks_lab_delete', track_id=track.id, lab_id=lab.id) }}"
+                                          onsubmit="return confirm('Remove this Lab from the Track?');">
+
+                                        <input type="hidden"
+                                               name="nonce"
+                                               value="{{ nonce }}">
+
+                                        <button class="btn btn-sm btn-outline-danger">
+                                            Remove
+                                        </button>
+
+                                    </form>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- EDIT LAB -->
+                            <div class="collapse mb-3"
+                                 id="edit-lab-{{ lab.id }}">
+
+                                <div class="edit-panel">
+
+                                    <form method="POST"
+                                          action="{{ url_for('tracks_lab_edit', track_id=track.id, lab_id=lab.id) }}">
+
+                                        <input type="hidden"
+                                               name="nonce"
+                                               value="{{ nonce }}">
+
+                                        <div class="row g-2">
+
+                                            <div class="col-md-4">
+                                                <input class="form-control"
+                                                       name="title_override"
+                                                       value="{{ lab.title_override or '' }}"
+                                                       placeholder="Lab title override">
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <input class="form-control"
+                                                       name="sort_order"
+                                                       type="number"
+                                                       value="{{ lab.sort_order }}"
+                                                       placeholder="Order">
+                                            </div>
+
+                                            <div class="col-md-3">
+
+                                                <div class="form-check mt-2">
+
+                                                    <input class="form-check-input"
+                                                           type="checkbox"
+                                                           name="required"
+                                                           value="1"
+                                                           id="required-{{ lab.id }}"
+                                                           {% if lab.required %}checked{% endif %}>
+
+                                                    <label class="form-check-label"
+                                                           for="required-{{ lab.id }}">
+                                                        Required Lab
+                                                    </label>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-md-2">
+
+                                                <button class="btn btn-primary w-100">
+                                                    Save
+                                                </button>
+
+                                            </div>
+
+                                            <div class="col-12">
+
+                                                <textarea class="form-control"
+                                                          name="description"
+                                                          rows="2"
+                                                          placeholder="Lab description">{{ lab.description or '' }}</textarea>
+
+                                            </div>
+
+                                        </div>
+
+                                    </form>
+
+
+                                    <!-- MOVE LAB -->
+                                    <form method="POST"
+                                          action="{{ url_for('tracks_lab_move', track_id=track.id, lab_id=lab.id) }}"
+                                          class="row g-2 mt-3">
+
+                                        <input type="hidden"
+                                               name="nonce"
+                                               value="{{ nonce }}">
+
+                                        <div class="col-md-9">
+
+                                            <select class="form-select"
+                                                    name="level_id">
+
+                                                {% for target_level in track.levels %}
+
+                                                <option value="{{ target_level.id }}"
+                                                    {% if target_level.id == level.id %}selected{% endif %}>
+
+                                                    Level {{ target_level.level_number }}
+                                                    — {{ target_level.name }}
+
+                                                </option>
+
+                                                {% endfor %}
+
+                                            </select>
+
+                                        </div>
+
+                                        <div class="col-md-3">
+
+                                            <button class="btn btn-outline-secondary w-100">
+                                                Move Lab
+                                            </button>
+
+                                        </div>
+
+                                    </form>
+
+                                </div>
+
+                            </div>
+
+                            {% else %}
+
+                            <div class="empty-level">
+                                No Labs mapped to this Level yet.
+                            </div>
+
+                            {% endfor %}
+
+
+                            <!-- ADD LAB -->
+                            <div class="add-lab-panel">
+
+                                <div class="add-lab-title">
+                                    + ADD CHALLENGE AS LAB
+                                </div>
+
+                                <form method="POST"
+                                      action="{{ url_for('tracks_lab_create', track_id=track.id) }}">
+
+                                    <input type="hidden"
+                                           name="nonce"
+                                           value="{{ nonce }}">
+
+                                    <input type="hidden"
+                                           name="level_id"
+                                           value="{{ level.id }}">
+
+                                    <!-- SEARCH / FILTER -->
+                                    <div class="challenge-picker mb-3">
+
+                                        <div class="row g-2">
+
+                                            <div class="col-md-6">
+
+                                                <input type="text"
+                                                       class="form-control challenge-search"
+                                                       data-level="{{ level.id }}"
+                                                       placeholder="Search challenge by name or ID...">
+
+                                            </div>
+
+                                            <div class="col-md-3">
+
+                                                <select class="form-select challenge-category"
+                                                        data-level="{{ level.id }}">
+
+                                                    <option value="">
+                                                        All Categories
+                                                    </option>
+
+                                                    {% set categories = [] %}
+
+                                                    {% for challenge in challenges %}
+
+                                                        {% if challenge.category and challenge.category not in categories %}
+                                                            {% set _ = categories.append(challenge.category) %}
+                                                        {% endif %}
+
+                                                    {% endfor %}
+
+                                                    {% for category in categories|sort %}
+                                                        <option value="{{ category|lower }}">
+                                                            {{ category }}
+                                                        </option>
+                                                    {% endfor %}
+
+                                                </select>
+
+                                            </div>
+
+                                            <div class="col-md-3 d-flex align-items-center justify-content-end">
+
+                                                <span class="challenge-count"
+                                                      data-count-for="{{ level.id }}">
+                                                    {{ challenges|length }} challenges
+                                                </span>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="challenge-help">
+                                            Search theo Challenge ID, name hoặc Category.
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- CHALLENGE SELECT -->
+                                    <div class="row g-2">
+
+                                        <div class="col-lg-6">
+
+                                            <select class="form-select challenge-select"
+                                                    name="challenge_id"
+                                                    data-level="{{ level.id }}"
+                                                    required>
+
+                                                <option value="">
+                                                    Select CTFd Challenge...
+                                                </option>
+
+                                                {% for challenge in challenges %}
+
+                                                <option value="{{ challenge.id }}"
+                                                        data-name="{{ challenge.name|lower }}"
+                                                        data-category="{{ (challenge.category or '')|lower }}"
+                                                        data-search="#{{ challenge.id }} {{ challenge.name|lower }} {{ (challenge.category or '')|lower }}">
+
+                                                    #{{ challenge.id }}
+                                                    —
+                                                    {{ challenge.name }}
+
+                                                    {% if challenge.category %}
+                                                        [{{ challenge.category }}]
+                                                    {% endif %}
+
+                                                </option>
+
+                                                {% endfor %}
+
+                                            </select>
+
+                                            <div class="no-challenge-result"
+                                                 data-empty-for="{{ level.id }}">
+                                                No matching challenges found.
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="col-lg-3">
+
+                                            <input class="form-control"
+                                                   name="title_override"
+                                                   placeholder="Title override">
+
+                                        </div>
+
+                                        <div class="col-lg-1">
+
+                                            <input class="form-control"
+                                                   name="sort_order"
+                                                   type="number"
+                                                   value="0"
+                                                   placeholder="Order">
+
+                                        </div>
+
+                                        <div class="col-lg-2">
+
+                                            <button class="btn btn-success w-100">
+                                                + Add Lab
+                                            </button>
+
+                                        </div>
+
+                                        <div class="col-12">
+
+                                            <div class="form-check">
+
+                                                <input class="form-check-input"
+                                                       type="checkbox"
+                                                       name="required"
+                                                       value="1"
+                                                       id="new-required-{{ level.id }}"
+                                                       checked>
+
+                                                <label class="form-check-label"
+                                                       for="new-required-{{ level.id }}">
+                                                    Required for Track completion
+                                                </label>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    {% else %}
+
+                    <div class="empty-level">
+                        No Levels created for this Track yet.
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% else %}
+
+    <div class="alert alert-info">
+        No Tracks have been created yet.
+    </div>
+
+    {% endfor %}
+
+</div>
+
+
+<script>
+(function () {
+
+    function normalize(value) {
+        return (value || "").toLowerCase().trim();
+    }
+
+    function filterChallenges(levelId) {
+
+        const searchInput = document.querySelector(
+            '.challenge-search[data-level="' + levelId + '"]'
+        );
+
+        const categorySelect = document.querySelector(
+            '.challenge-category[data-level="' + levelId + '"]'
+        );
+
+        const challengeSelect = document.querySelector(
+            '.challenge-select[data-level="' + levelId + '"]'
+        );
+
+        const countElement = document.querySelector(
+            '[data-count-for="' + levelId + '"]'
+        );
+
+        const emptyElement = document.querySelector(
+            '[data-empty-for="' + levelId + '"]'
+        );
+
+        if (!searchInput || !categorySelect || !challengeSelect) {
+            return;
+        }
+
+        const search = normalize(searchInput.value);
+        const category = normalize(categorySelect.value);
+
+        let visibleCount = 0;
+        let selectedStillVisible = false;
+
+        Array.from(challengeSelect.options).forEach(function (option) {
+
+            if (!option.value) {
+                return;
+            }
+
+            const name = normalize(option.dataset.name);
+            const optionCategory = normalize(option.dataset.category);
+            const searchText = normalize(option.dataset.search);
+
+            const searchMatch =
+                !search ||
+                name.includes(search) ||
+                searchText.includes(search);
+
+            const categoryMatch =
+                !category ||
+                optionCategory === category;
+
+            const visible = searchMatch && categoryMatch;
+
+            option.hidden = !visible;
+
+            if (visible) {
+                visibleCount++;
+
+                if (option.selected) {
+                    selectedStillVisible = true;
+                }
+            }
+        });
+
+        if (!selectedStillVisible) {
+            challengeSelect.value = "";
+        }
+
+        if (countElement) {
+            countElement.textContent =
+                visibleCount + " challenge" +
+                (visibleCount === 1 ? "" : "s");
+        }
+
+        if (emptyElement) {
+            emptyElement.style.display =
+                visibleCount === 0 ? "block" : "none";
+        }
+    }
+
+
+    document.querySelectorAll(".challenge-search").forEach(function (input) {
+
+        input.addEventListener("input", function () {
+            filterChallenges(input.dataset.level);
+        });
+
+    });
+
+
+    document.querySelectorAll(".challenge-category").forEach(function (select) {
+
+        select.addEventListener("change", function () {
+            filterChallenges(select.dataset.level);
+        });
+
+    });
+
+
+    document.querySelectorAll(".challenge-select").forEach(function (select) {
+
+        select.addEventListener("change", function () {
+
+            const selected = select.options[select.selectedIndex];
+
+            if (!selected || !selected.value) {
+                return;
+            }
+
+            const levelId = select.dataset.level;
+
+            const titleInput = select
+                .closest("form")
+                .querySelector('input[name="title_override"]');
+
+            if (titleInput && !titleInput.value.trim()) {
+                titleInput.placeholder =
+                    selected.textContent.trim();
+            }
+
+        });
+
+    });
+
+
+})();
+</script>
+
+{% endblock %}

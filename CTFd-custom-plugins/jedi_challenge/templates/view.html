@@ -1,0 +1,80 @@
+{% extends "challenge.html" %}
+
+{% block input %}
+
+<input
+    id="challenge-id"
+    class="challenge-id"
+    type="hidden"
+    value="{{ challenge.id }}"
+>
+
+<div id="jedi-metadata"></div>
+
+<div id="jedi-challenge"></div>
+
+<style>
+
+#jedi-metadata {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.jedi-metadata-section {
+    margin-bottom: 16px;
+}
+
+.jedi-metadata-label {
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.jedi-metadata-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.jedi-metadata-tag {
+    display: inline-block;
+    padding: 4px 10px;
+    border: 1px solid var(--bs-border-color);
+    border-radius: 999px;
+    font-size: .9rem;
+}
+
+#jedi-challenge {
+    margin-top: 20px;
+}
+
+.jedi-stage {
+    border: 1px solid var(--bs-border-color);
+    border-radius: 8px;
+    padding: 20px;
+    transition: opacity .2s ease;
+}
+
+.jedi-stage.locked {
+    opacity: .55;
+}
+
+.jedi-stage h4 {
+    font-weight: 600;
+}
+
+.jedi-message {
+    font-weight: 600;
+    min-height: 24px;
+}
+
+#jedi-challenge code {
+    font-size: .95em;
+}
+
+</style>
+
+{% endblock %}
+
+{% block submit %}
+
+{% endblock %}

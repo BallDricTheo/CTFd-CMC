@@ -1,0 +1,111 @@
+{
+  "category": "Endpoint Forensics",
+  "tactics": [
+    "Execution",
+    "Credential Access"
+  ],
+  "tools": [
+    "FTK Imager"
+  ],
+  "stages": [
+    {
+      "stage": 1,
+      "title": "LINUX DISTRIBUTION",
+      "question": "What Linux distribution is used on the workstation?",
+      "answers": [
+        "kali"
+      ],
+      "case_sensitive": false
+    },
+    {
+      "stage": 2,
+      "title": "APACHE LOG",
+      "question": "What is the MD5 hash of the Apache access.log file?",
+      "answers": [
+        "d41d8cd98f00b204e9800998ecf8427e"
+      ],
+      "case_sensitive": false
+    },
+    {
+      "stage": 3,
+      "title": "CREDENTIAL DUMPING",
+      "question": "What is the name of the file related to credential dumping?",
+      "answers": [
+        "mimikatz_trunk.zip"
+      ],
+      "case_sensitive": false
+    },
+    {
+      "stage": 4,
+      "title": "SECRET FILE",
+      "question": "What is the path of the super-secret file?",
+      "answers": [
+        "/root/Desktop/SuperSecretFile.txt"
+      ],
+      "case_sensitive": true
+    },
+    {
+      "stage": 5,
+      "title": "EXECUTION",
+      "question": "What program used didyouthinkwedmakeiteasy.jpg during execution?",
+      "answers": [
+        "binwalk"
+      ],
+      "case_sensitive": false
+    },
+    {
+      "stage": 6,
+      "title": "CHECKLIST",
+      "question": "What is the third goal from the checklist Karen created?",
+      "answers": [
+        "profit"
+      ],
+      "case_sensitive": false
+    },
+    {
+      "stage": 7,
+      "title": "APACHE",
+      "question": "How many times was apache run?",
+      "answers": [
+        "0"
+      ],
+      "case_sensitive": false
+    },
+    {
+      "stage": 8,
+      "title": "ATTACK EVIDENCE",
+      "question": "What is the name of the file that provides evidence of the attack?",
+      "answers": [
+        "irZLAohL.jpeg"
+      ],
+      "case_sensitive": true
+    },
+    {
+      "stage": 9,
+      "title": "KAREN",
+      "question": "What did the expert Karen taunt?",
+      "answers": [
+        "Young"
+      ],
+      "case_sensitive": false
+    },
+    {
+      "stage": 10,
+      "title": "ROOT ACCESS",
+      "question": "Which user did Karen su to in order to obtain root privileges?",
+      "answers": [
+        "postgres"
+      ],
+      "case_sensitive": false
+    },
+    {
+      "stage": 11,
+      "title": "WORKING DIRECTORY",
+      "question": "What was the current working directory?",
+      "answers": [
+        "/root/Documents/myfirsthack/"
+      ],
+      "case_sensitive": true
+    }
+  ]
+}

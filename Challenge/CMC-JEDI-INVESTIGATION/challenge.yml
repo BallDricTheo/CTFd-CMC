@@ -1,0 +1,98 @@
+name: "CMC DFIR - JEDI INVESTIGATION"
+author: "CMC Cyber Security"
+category: "DFIR"
+
+description: |
+  # CMC DFIR - JEDI INVESTIGATION
+
+  Một chiến dịch điều tra DFIR liên quan đến một Jedi bí ẩn đã để lại
+  nhiều dấu vết trên hệ thống.
+
+  Bạn được cung cấp hai artifact:
+
+  - map.jpg
+  - LocalState.zip
+
+  Nhiệm vụ của bạn là lần theo chuỗi bằng chứng theo đúng thứ tự.
+
+  ---
+
+  ## Q1 — SECRET MAP
+
+  Một bản đồ tưởng như chỉ là một file hình ảnh bình thường.
+
+  Phân tích metadata của:
+
+      map.jpg
+
+  Hãy tìm thông tin bí mật được Jedi giấu trong metadata.
+
+  Submit flag của Q1.
+
+  ---
+
+  ## Q2 — MATRYOSHKA MAP
+
+  Thông tin tìm được ở Q1 chỉ là lớp đầu tiên.
+
+  Tiếp tục điều tra:
+
+      map.jpg
+
+  Hãy tìm dữ liệu/hình ảnh được giấu bên trong file và khai thác
+  lớp concealment tiếp theo.
+
+  Submit flag của Q2.
+
+  ---
+
+  ## Q3 — JEDI USE WINDOWS NOTEPAD?
+
+  Jedi đã sử dụng Windows Notepad để làm việc với danh sách bí mật.
+
+  Bạn chỉ còn:
+
+      LocalState.zip
+
+  Hãy phân tích các Windows Notepad artifacts, đặc biệt là trạng thái
+  của các tab và nội dung đã được chỉnh sửa.
+
+  Gợi ý:
+
+  Jedi đã đóng và mở lại Windows Notepad trước khi tiếp tục chỉnh sửa.
+
+  Hãy xác định danh sách các droid bí mật và khôi phục flag.
+
+  Submit flag của Q3.
+
+  ---
+
+  ## RULES
+
+  Đây là một challenge gồm 3 investigation stages.
+
+  Người chơi phải hoàn thành đầy đủ Q1, Q2 và Q3.
+
+  Thứ tự khuyến nghị:
+
+      Q1 → Q2 → Q3
+
+  Không cần brute force flag.
+
+  Tập trung vào forensic analysis của các artifact được cung cấp.
+
+value: 575
+type: "standard"
+
+logic: "all"
+
+flags:
+  - "flag{m47ry05hk4}"
+  - "flag{k3n081}"
+  - "flag{r5-d4_k-2so_bd-1}"
+
+files:
+  - "dist/map.jpg"
+  - "dist/LocalState.zip"
+
+version: "1.0"

@@ -1,0 +1,72 @@
+# Source archive
+*.tar.gz
+*.zip
+
+# Runtime data
+CTFd/.data/
+.data/
+
+# Environment / secrets
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+secret/
+
+# Database
+*.sql
+*.sql.gz
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+logs/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Backup files
+*.bak
+*.save
+*.old
+
+# Windows / IDE
+Thumbs.db
+.DS_Store
+.vscode/
+.idea/
+*.original
+*.bak.*
+*.save.*
+*.before-*
+
+# CTF source archives
+Challenge/*.tar.gz
+
+# Extracted forensic evidence
+Challenge/**/temp_extract_dir/
+
+# Large forensic artifacts
+*.ad1
+*.E01
+*.e01
+*.raw
+*.mem
+*.dmp
+*.vmem
+
+# Optional packet capture evidence
+*.pcap
+*.pcapng
+
+# Backup and temporary source files
+*.bak*
+*.save*
+*.before-*

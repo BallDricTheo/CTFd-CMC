@@ -1,0 +1,238 @@
+{
+  "stages": [
+    {
+      "stage": 1,
+      "title": "PCAP OVERVIEW",
+      "question": "How many packets does the capture have?",
+      "answers": [
+        "4003"
+      ],
+      "case_sensitive": true
+    },
+    {
+      "stage": 2,
+      "title": "PCAP OVERVIEW",
+      "question": "At what time was the first packet captured?",
+      "answers": [
+        "2019-04-10 20:37:07 UTC"
+      ],
+      "case_sensitive": true
+    },
+    {
+      "stage": 3,
+      "title": "PCAP OVERVIEW",
+      "question": "What is the duration of the capture?",
+      "answers": [
+        "01:03:41"
+      ],
+      "case_sensitive": true
+    },
+    {
+      "stage": 4,
+      "title": "LINK LEVEL",
+      "question": "What is the most active computer at the link level?",
+      "answers": [
+        "00:08:02:1c:47:ae"
+      ],
+      "case_sensitive": true
+    },
+    {
+      "stage": 5,
+      "title": "LINK LEVEL",
+      "question": "What is the manufacturer of the NIC of the most active system at the link level?",
+      "answers": [
+        "Hewlett-Packard"
+      ],
+      "case_sensitive": true
+    },
+    {
+      "stage": 6,
+      "title": "LINK LEVEL",
+      "question": "Where is the headquarters of the company that manufactured the NIC of the most active computer at the link level?",
+      "answers": [
+        "Palo Alto"
+      ],
+      "case_sensitive": true
+    },
+    {
+      "stage": 7,
+      "title": "NETWORK LEVEL",
+      "question": "The organization works with private addressing and netmask /24. How many computers in the organization are involved in the capture?",
+      "answers": [
+        "3"
+      ],
+      "case_sensitive": true
+    },
+    {
+      "stage": 8,
+      "title": "NETWORK LEVEL",
+      "question": "What is the name of the most active computer at the network level?",
+      "answers": [
+        "Beijing-5cd1-PC"
+      ],
+      "case_sensitive": true
+    },
+    {
+      "stage": 9,
+      "title": "DNS INVESTIGATION",
+      "question": "What is the IP of the organization's DNS server?",
+      "answers": [
+        "10.4.10.4"
+      ],
+      "case_sensitive": true
+    },
+    {
+      "stage": 10,
+      "title": "DNS INVESTIGATION",
+      "question": "What domain is the victim asking about in packet 204?",
+      "answers": [
+        "proforma-invoices.com"
+      ],
+      "case_sensitive": true
+    },
+    {
+      "stage": 11,
+      "title": "DNS INVESTIGATION",
+      "question": "What is the IP of the domain in the previous question?",
+      "answers": [
+        "217.182.138.150"
+      ],
+      "case_sensitive": true
+    },
+    {
+      "stage": 12,
+      "title": "THREAT INTELLIGENCE",
+      "question": "Indicate the country to which the IP in the previous section belongs.",
+      "answers": [
+        "France"
+      ],
+      "case_sensitive": true
+    },
+    {
+      "stage": 13,
+      "title": "VICTIM PROFILING",
+      "question": "What operating system does the victim's computer run?",
+      "answers": [
+        "windows nt 6.1"
+      ],
+      "case_sensitive": true
+    },
+    {
+      "stage": 14,
+      "title": "MALWARE DELIVERY",
+      "question": "What is the name of the malicious file downloaded by the accountant?",
+      "answers": [
+        "tkraw_Protected99.exe"
+      ],
+      "case_sensitive": true
+    },
+    {
+      "stage": 15,
+      "title": "MALWARE DELIVERY",
+      "question": "What is the MD5 hash of the downloaded file?",
+      "answers": [
+        "71826ba081e303866ce2a2534491a2f7"
+      ],
+      "case_sensitive": true
+    },
+    {
+      "stage": 16,
+      "title": "MALWARE DELIVERY",
+      "question": "What software runs the webserver that hosts the malware?",
+      "answers": [
+        "LiteSpeed"
+      ],
+      "case_sensitive": true
+    },
+    {
+      "stage": 17,
+      "title": "EMAIL EXFILTRATION",
+      "question": "What is the public IP of the victim's computer?",
+      "answers": [
+        "173.66.146.112"
+      ],
+      "case_sensitive": true
+    },
+    {
+      "stage": 18,
+      "title": "EMAIL EXFILTRATION",
+      "question": "In which country is the email server to which the stolen information is sent?",
+      "answers": [
+        "United States"
+      ],
+      "case_sensitive": true
+    },
+    {
+      "stage": 19,
+      "title": "EMAIL EXFILTRATION",
+      "question": "Analyzing the first extraction of information. What software runs the email server to which the stolen data is sent?",
+      "answers": [
+        "exim 4.91"
+      ],
+      "case_sensitive": true
+    },
+    {
+      "stage": 20,
+      "title": "EMAIL EXFILTRATION",
+      "question": "To which email account is the stolen information sent?",
+      "answers": [
+        "sales.del@macwinlogistics.in"
+      ],
+      "case_sensitive": true
+    },
+    {
+      "stage": 21,
+      "title": "EMAIL EXFILTRATION",
+      "question": "What is the password used by the malware to send the email?",
+      "answers": [
+        "Sales@23"
+      ],
+      "case_sensitive": true
+    },
+    {
+      "stage": 22,
+      "title": "MALWARE IDENTIFICATION",
+      "question": "Which malware variant exfiltrated the data?",
+      "answers": [
+        "reborn v9"
+      ],
+      "case_sensitive": true
+    },
+    {
+      "stage": 23,
+      "title": "STOLEN CREDENTIALS",
+      "question": "What are the Bank of America access credentials? (username:password)",
+      "answers": [
+        "roman.mcguire:P@ssw0rd$"
+      ],
+      "case_sensitive": true
+    },
+    {
+      "stage": 24,
+      "title": "EXFILTRATION TIMING",
+      "question": "Every how many minutes does the collected data get exfiltrated?",
+      "answers": [
+        "10"
+      ],
+      "case_sensitive": true
+    }
+  ],
+  "category": "Network Forensics",
+  "tactics": [
+    "Initial Access",
+    "Execution",
+    "Stealth",
+    "Credential Access",
+    "Discovery",
+    "Collection",
+    "Command and Control",
+    "Exfiltration"
+  ],
+  "tools": [
+    "Wireshark",
+    "Brim",
+    "Apackets",
+    "MaxMind Geo IP",
+    "VirusTotal"
+  ]
+}

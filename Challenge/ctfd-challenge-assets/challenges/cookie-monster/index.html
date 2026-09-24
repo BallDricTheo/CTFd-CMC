@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Monster Fanpage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #007bff;
+        }
+        .flag {
+            display: none;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Cookie Monster Fanpage!</h1>
+    <p>Cookie Monster is the beloved Sesame Street character who loves cookies more than anything!</p>
+    <p>He sings "C is for Cookie" and teaches us about letters and numbers while munching on his favorite treats.</p>
+
+    <img src="cookie-monster.png" alt="Cookie Monster" width="300">
+
+    <p>Share your favorite Cookie Monster moments in the comments below!</p>
+    <div id="flag" class="flag"></div>
+
+    <script>
+        // Function to get cookie value
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return null;
+        }
+
+        // Set cookie to false if not set
+        if (!getCookie('isAdmin')) {
+            document.cookie = "isAdmin=false; path=/";
+        }
+
+        // Check if isAdmin is true and show flag
+        if (getCookie('isAdmin') === 'true') {
+            document.getElementById('flag').style.display = 'block';
+            document.getElementById('flag').innerHTML = '<h2>Congratulations! You found the flag:</h2><p>flag{c00k1e_m4n1pul4t10n}</p>';
+        }
+    </script>
+</body>
+</html>

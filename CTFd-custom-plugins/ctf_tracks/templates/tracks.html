@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block stylesheets %}
+{{ super() }}
+<link rel="stylesheet" href="/plugins/ctf_tracks/assets/tracks.css">
+{% endblock %}
+
+{% block content %}
+<div class="container py-5 ctf-tracks">
+
+  <div class="tracks-header">
+    <div class="tracks-eyebrow">
+      <span class="eyebrow-line"></span>
+      CMC CYBER SECURITY
+    </div>
+
+    <h1>Skill Tracks</h1>
+
+    <p>
+      Build practical cybersecurity skills through structured,
+      hands-on investigation labs.
+    </p>
+  </div>
+
+  <div class="row g-4">
+
+    {% for item in cards %}
+    {% set has_labs = item.total > 0 %}
+    {% set completed = item.total > 0 and item.completed == item.total %}
+    {% set started = item.completed > 0 and not completed %}
+
+    <div class="col-12 col-md-6 col-xl-4">
+
+      <a class="track-card {% if not has_labs %}track-coming{% endif %}"
+         href="{{ url_for('track_detail', slug=item.track.slug) }}">
+
+        <div class="track-card-top">
+
+          <div class="track-icon">
+            {{ item.track.icon }}
+          </div>
+
+          <span class="difficulty difficulty-{{ item.track.difficulty|lower }}">
+            {{ item.track.difficulty }}
+          </span>
+
+        </div>
+
+        <div class="track-content">
+
+          <h2>{{ item.track.name }}</h2>
+
+          <p class="track-description">
+            {{ item.track.description or 'Skill-based investigation path.' }}
+          </p>
+
+        </div>
+
+        {% if has_labs %}
+
+        <div class="track-progress">
+
+          <div class="progress-label">
+            <span>{{ item.completed }}/{{ item.total }} LABS</span>
+            <span>{{ item.progress }}%</span>
+          </div>
+
+          <div class="track-progress-bar">
+            <div style="width: {{ item.progress }}%"></div>
+          </div>
+
+        </div>
+
+        <div class="track-footer">
+
+          {% if completed %}
+            <span class="track-status status-completed">
+              <span>✓</span> COMPLETED
+            </span>
+
+            <span class="track-action">
+              REVIEW TRACK →
+            </span>
+
+          {% elif started %}
+            <span class="track-status status-progress">
+              <span>●</span> IN PROGRESS
+            </span>
+
+            <span class="track-action">
+              CONTINUE →
+            </span>
+
+          {% else %}
+            <span class="track-status">
+              NOT STARTED
+            </span>
+
+            <span class="track-action">
+              START TRACK →
+            </span>
+          {% endif %}
+
+        </div>
+
+        {% else %}
+
+        <div class="track-footer">
+
+          <span class="track-status status-coming">
+            COMING SOON
+          </span>
+
+          <span class="track-action">
+            VIEW TRACK →
+          </span>
+
+        </div>
+
+        {% endif %}
+
+      </a>
+
+    </div>
+
+    {% else %}
+
+    <div class="col-12">
+      <div class="track-empty">
+        <div>◈</div>
+        <h3>No Skill Tracks Available</h3>
+        <p>Tracks will appear here when they are published.</p>
+      </div>
+    </div>
+
+    {% endfor %}
+
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{
+  "stages": [
+    {
+      "stage": 1,
+      "title": "SECRET MAP",
+      "question": "Phân tích metadata của map.jpg. Tìm thông tin bí mật được Jedi giấu trong EXIF metadata.",
+      "answers": [
+        "flag{m47ry05hk4}"
+      ],
+      "case_sensitive": true
+    },
+    {
+      "stage": 2,
+      "title": "MATRYOSHKA MAP",
+      "question": "Tiếp tục điều tra map.jpg. Carve dữ liệu/hình ảnh được giấu bên trong file.",
+      "answers": [
+        "flag{k3n081}"
+      ],
+      "case_sensitive": true
+    },
+    {
+      "stage": 3,
+      "title": "JEDI USE WINDOWS NOTEPAD?",
+      "question": "Phân tích LocalState.zip. Điều tra Windows Notepad TabState/WindowState và khôi phục danh sách droid bí mật.",
+      "answers": [
+        "flag{r5-d4_k-2so_bd-1}"
+      ],
+      "case_sensitive": true
+    }
+  ]
+}

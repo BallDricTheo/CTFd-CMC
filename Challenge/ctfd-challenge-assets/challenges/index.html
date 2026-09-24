@@ -1,0 +1,87 @@
+<html>
+<head>
+<title>404 Not Found</title>
+<style type="text/css">
+  body {
+    background:#0000aa;
+    color:#ffffff;
+    font-family:"Lucida Console", Monaco, monospace;
+    font-weight: bold;
+    font-size:12pt;
+    text-align:center;
+  }
+
+  .content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 840px;
+  }
+  
+  blink {
+    animation: blinkingText 1s infinite;
+  }
+
+  @keyframes blinkingText{
+    0%{     color: #fff;    }
+    50%{    color: transparent; }
+    100%{   color: #fff;    }
+  }
+
+  .neg {
+    background:#aaa;
+    color:#0000aa;
+    padding:2px 8px;
+    font-weight:bold;
+  }
+
+  p {
+    margin:30px 0;
+    text-align:left;
+  }
+
+  a,a:hover {
+    color:inherit;
+    font:inherit;
+  }
+
+  ul {
+    padding-inline-start: 15px;
+  }
+
+  li {
+    position: relative;
+    list-style: none;
+    text-align: left;
+  }
+
+  li.str:before {
+    content: "*";
+    position: absolute;
+    left: -15px;
+    top: 3px;
+  }
+
+  .menu {
+    text-align:center;
+    margin-top:50px;
+  }
+</style>
+</head>
+<body>
+        <div class='content'>
+                <span class="neg">Windows</span>
+                <p>
+                A fatal exception 0E has occurred at 0028:C0034B23. The current application will be terminated.
+                </p>
+                <p>
+                        <ul>
+                                <li class='str'>Press any key to terminate the current application.</li>
+                                <li class='str'>Press CTRL+ALT+DEL to restart your computer. You will lose unsaved information in any programs that are running.</li>
+                        </ul>
+                </p>
+                Press any key to continue <blink>_</blink>
+        </div>
+</body>
+</html>
